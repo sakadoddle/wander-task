@@ -5,6 +5,8 @@ import { Task } from './entities/task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
+const TaskStatus = ['pending', 'completed', 'in progress'];
+
 @Injectable()
 export class TaskService {
   constructor(
@@ -13,6 +15,16 @@ export class TaskService {
   ) {}
 
   async create(createTaskDto: CreateTaskDto): Promise<Task> {
+    if (
+      createTaskDto &&
+      createTaskDto.status &&
+      !TaskStatus.includes(createTaskDto.status)
+    ) {
+      throw new HttpException(
+        'Status can only be pending, completed or in progress',
+        403,
+      );
+    }
     const userData = await this.taskRepository.create(createTaskDto);
     return this.taskRepository.save(userData);
   }
@@ -45,6 +57,16 @@ export class TaskService {
   }
 
   async update(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
+    if (
+      updateTaskDto &&
+      updateTaskDto.status &&
+      !TaskStatus.includes(updateTaskDto.status)
+    ) {
+      throw new HttpException(
+        'Status can only be pending, completed or in progress',
+        403,
+      );
+    }
     const existingUser = await this.findOne(id);
     const userData = this.taskRepository.merge(existingUser, updateTaskDto);
     return await this.taskRepository.save(userData);
