@@ -69,6 +69,7 @@ export class TaskService {
     }
     const existingUser = await this.findOne(id);
     const userData = this.taskRepository.merge(existingUser, updateTaskDto);
+    userData.updated_at = new Date();
     return await this.taskRepository.save(userData);
   }
 
