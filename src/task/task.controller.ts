@@ -35,7 +35,7 @@ export class TaskController {
   }
 
   @Get()
-  async findAll(@Query() filters: { priority?: number; status?: string }) {
+  async findAll(@Query() filters?: { priority?: number; status?: string }) {
     try {
       this.validateFilters(filters);
       const data = await this.taskService.findAll(filters);
