@@ -30,6 +30,25 @@ Fetches all tasks. Optional query parameters can be used to filter tasks by prio
 - `priority`: Filter tasks by priority level.
 - `status`: Filter tasks by status.
 
+**Response:**
+
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "id": "98f9443b-b3b3-4b2e-b499-431b1f6dcf29",
+            "title": "Task Management",
+            "desc": "Task Management Desc",
+            "priority": 1,
+            "status": "pending",
+            "created_at": "2024-04-10T17:13:54.865Z",
+            "updated_at": "2024-04-10T17:13:54.865Z"
+        },
+    ]
+}
+```
+
 ### Get a single task
 
 ```http
@@ -41,6 +60,22 @@ Fetches a single task by its ID.
 **Parameters:**
 
 - `id`: ID of the task to fetch.
+
+**Response:**
+```json
+{
+    "success": true,
+    "data": {
+      "id": "98f9443b-b3b3-4b2e-b499-431b1f6dcf29",
+      "title": "Task Management",
+      "desc": "Task Management Desc",
+      "priority": 1,
+      "status": "pending",
+      "created_at": "2024-04-10T17:13:54.865Z",
+      "updated_at": "2024-04-10T17:13:54.865Z"
+    }
+}
+```
 
 ### Create a new task
 
@@ -58,6 +93,14 @@ Creates a new task with the provided data.
   "desc": "Task description",
   "priority": 1,
   "status": "Pending"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Task Created Successfully"
 }
 ```
 
@@ -84,6 +127,14 @@ Updates an existing task with the provided data.
 }
 ```
 
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Task Updated Successfully"
+}
+```
+
 ### Delete a task
 
 ```http
@@ -95,3 +146,11 @@ Deletes an existing task by its ID.
 **Parameters:**
 
 - `id`: ID of the task to delete.
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Task Deleted Successfully"
+}
+```
