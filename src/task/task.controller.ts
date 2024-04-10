@@ -27,10 +27,7 @@ export class TaskController {
         message: 'Task Created Successfully',
       };
     } catch (error) {
-      return {
-        success: false,
-        message: error.message,
-      };
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -44,10 +41,7 @@ export class TaskController {
         data,
       };
     } catch (error) {
-      return {
-        success: false,
-        message: error.message,
-      };
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -60,10 +54,7 @@ export class TaskController {
         data,
       };
     } catch (error) {
-      return {
-        success: false,
-        message: error.message,
-      };
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -76,10 +67,7 @@ export class TaskController {
         message: 'Task Updated Successfully',
       };
     } catch (error) {
-      return {
-        success: false,
-        message: error.message,
-      };
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -92,10 +80,7 @@ export class TaskController {
         message: 'Task Deleted Successfully',
       };
     } catch (error) {
-      return {
-        success: false,
-        message: error.message,
-      };
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -108,7 +93,7 @@ export class TaskController {
 
     for (const key in filters) {
       if (!allowedKeys.includes(key)) {
-        throw new BadRequestException(`Invalid query parameter: ${key}`);
+        throw new BadRequestException();
       }
       validFilters[key] = filters[key];
     }
