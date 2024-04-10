@@ -17,8 +17,23 @@ export class TaskService {
     return this.taskRepository.save(userData);
   }
 
-  async findAll(): Promise<Task[]> {
-    return await this.taskRepository.find();
+  async findAll(filters: {
+    priority?: number;
+    status?: string;
+  }): Promise<Task[]> {
+    const { priority, status } = filters;
+    let query = this.taskRepository.createQueryBuilder('task');
+
+    if (priority !== undefined) {
+      query = query.andWhere('task.priority = :priority', { priority });
+    }
+
+    if (status !== undefined) {
+      query = query.andWhere('task.status = :status', { status });
+    }
+
+    const tasks = await query.getMany();
+    return tasks;
   }
 
   async findOne(id: string): Promise<Task> {

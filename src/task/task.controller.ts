@@ -1,11 +1,13 @@
 import {
   Controller,
+  Query,
   Get,
   Post,
   Body,
   Patch,
   Param,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -33,9 +35,10 @@ export class TaskController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(@Query() filters: { priority?: number; status?: string }) {
     try {
-      const data = await this.taskService.findAll();
+      this.validateFilters(filters);
+      const data = await this.taskService.findAll(filters);
       return {
         success: true,
         data,
@@ -94,5 +97,22 @@ export class TaskController {
         message: error.message,
       };
     }
+  }
+
+  private validateFilters(filters: any): {
+    priority?: number;
+    status?: string;
+  } {
+    const allowedKeys = ['priority', 'status'];
+    const validFilters: any = {};
+
+    for (const key in filters) {
+      if (!allowedKeys.includes(key)) {
+        throw new BadRequestException(`Invalid query parameter: ${key}`);
+      }
+      validFilters[key] = filters[key];
+    }
+
+    return validFilters;
   }
 }
