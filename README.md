@@ -21,6 +21,9 @@ This is a simple RESTful API for managing tasks built with NestJS and TypeORM.
 
 ```http
 GET /tasks
+GET /tasks?status=pending
+GET /tasks?priority=1
+GET /tasks?status=pending&priority=1
 ```
 
 Fetches all tasks. Optional query parameters can be used to filter tasks by priority and/or status.
