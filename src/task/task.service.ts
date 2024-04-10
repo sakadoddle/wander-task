@@ -62,10 +62,7 @@ export class TaskService {
       updateTaskDto.status &&
       !TaskStatus.includes(updateTaskDto.status)
     ) {
-      throw new HttpException(
-        'Status can only be pending, completed or in progress',
-        403,
-      );
+      throw new Error('Status can only be pending, completed or in progress');
     }
     const existingUser = await this.findOne(id);
     const userData = this.taskRepository.merge(existingUser, updateTaskDto);
